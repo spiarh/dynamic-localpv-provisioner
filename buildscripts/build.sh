@@ -104,6 +104,7 @@ fi
 
 env GOOS=$GOOS GOARCH=$GOARCH go build ${BUILD_TAG} -ldflags \
     "-X github.com/openebs/maya/pkg/version.GitCommit=${GIT_COMMIT} \
+    -extldflags=-static \
     -X main.CtlName='${CTLNAME}' \
     -X github.com/openebs/maya/pkg/version.Version=${VERSION}" \
     -o $output_name\
