@@ -16,7 +16,7 @@
 #
 
 # This script builds the application from source for multiple platforms.
-set -e
+set -ex
 
 # Get the parent directory of where this script is.
 SOURCE="${BASH_SOURCE[0]}"
@@ -102,9 +102,9 @@ if [ $GOOS = "windows" ]; then
     output_name+='.exe'
 fi
 
-env GOOS=$GOOS GOARCH=$GOARCH go build ${BUILD_TAG} -ldflags \
+env CGO_ENABLED=0 OOS=$GOOS GOARCH=$GOARCH go build ${BUILD_TAG} -ldflags \
     "-X github.com/openebs/maya/pkg/version.GitCommit=${GIT_COMMIT} \
-    -extldflags=-static \
+    -extldflags '-static' \
     -X main.CtlName='${CTLNAME}' \
     -X github.com/openebs/maya/pkg/version.Version=${VERSION}" \
     -o $output_name\
